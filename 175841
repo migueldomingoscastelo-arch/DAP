@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academia DAP</title>
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --bg-soft:#11182d;
+      --panel:#121b31;
+      --panel-2:#18233f;
+      --card:#1a2746;
+      --card-2:#22345d;
+      --text:#eef4ff;
+      --muted:#c5d2ea;
+      --line:rgba(255,255,255,0.08);
+      --brand:#6ea8ff;
+      --brand-2:#8c7bff;
+      --brand-3:#49c5b6;
+      --gold:#ffd166;
+      --danger:#ff6b6b;
+      --success:#22c55e;
+      --shadow:0 14px 40px rgba(0,0,0,.35);
+      --radius:18px;
+      --radius-lg:24px;
+      --max:1450px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    }
+
+    html{scroll-behavior:smooth;}
+    body{
+      background:
+        radial-gradient(circle at top right, rgba(110,168,255,.14), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(140,123,255,.12), transparent 26%),
+        linear-gradient(135deg, var(--bg), #0f1730 45%, #0c1328);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+    }
+
+    a{color:inherit;text-decoration:none;}
+    button, input, select, textarea{
+      font:inherit;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      width:290px;
+      min-width:290px;
+      height:100vh;
+      position:sticky;
+      top:0;
+      background:rgba(10,16,32,.75);
+      backdrop-filter:blur(14px);
+      border-right:1px solid var(--line);
+      padding:22px 18px;
+      overflow-y:auto;
+      z-index:20;
+    }
+
+    .brand-box{
+      background:linear-gradient(135deg, rgba(110,168,255,.18), rgba(140,123,255,.12));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
+    }
+
+    .brand-box h1{
+      font-size:1.9rem;
+      letter-spacing:.5px;
+      margin-bottom:6px;
+      color:#fff;
+    }
+
+    .brand-box p{
+      color:var(--muted);
+      line-height:1.5;
+      font-size:.95rem;
+    }
+
+    .nav-group{
+      margin-top:18px;
+    }
+
+    .nav-title{
+      color:#a8b7d8;
+      font-size:.9rem;
+      margin-bottom:10px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+
+    .menu{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .menu a{
+      display:block;
+      padding:12px 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+      border:1px solid transparent;
+      color:#e8efff;
+      transition:.25s ease;
+      font-weight:600;
+    }
+
+    .menu a:hover{
+      transform:translateX(3px);
+      border-color:rgba(110,168,255,.28);
+      background:linear-gradient(90deg, rgba(110,168,255,.14), rgba(140,123,255,.08));
+    }
+
+    .sidebar-btn{
+      margin-top:16px;
+      width:100%;
+      border:none;
+      border-radius:14px;
+      padding:12px 14px;
+      background:linear-gradient(90deg, var(--brand), var(--brand-2));
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:var(--shadow);
+      transition:.25s;
+    }
+    .sidebar-btn:hover{transform:translateY(-2px);}
+
+    /* Main */
+    .main{
+      flex:1;
+      padding:26px;
+      max-width:calc(var(--max) + 52px);
+      width:100%;
+      margin:0 auto;
+      position:relative;
+    }
+
+    .section{
+      background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.025));
+      border:1px solid var(--line);
+      border-radius:var(--radius-lg);
+      padding:26px;
+      margin-bottom:22px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .section::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(120deg, rgba(110,168,255,.04), transparent 30%, rgba(140,123,255,.03));
+      pointer-events:none;
+    }
+
+    .section-title{
+      font-size:2rem;
+      margin-bottom:18px;
+      color:#fff;
+      position:relative;
+      z-index:1;
+    }
+
+    .section-sub{
+      color:var(--muted);
+      line-height:1.7;
+      margin-bottom:18px;
+      position:relative;
+      z-index:1;
+    }
+
+    /* Top hero */
+    .hero{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:22px;
+      align-items:stretch;
+    }
+
+    .hero-card{
+      background:linear-gradient(135deg, rgba(24,35,63,.96), rgba(19,29,53,.96));
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:24px;
+      min-height:100%;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero-card h2{
+      font-size:2.4rem;
+      margin-bottom:12px;
+      line-height:1.15;
+    }
+
+    .hero-card p{
+      color:var(--muted);
+      line-height:1.8;
+      font-size:1.02rem;
+      max-width:850px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .btn{
+      border:none;
+      border-radius:14px;
+      padding:12px 18px;
+      cursor:pointer;
+      font-weight:700;
+      transition:.25s;
+      display:inline-block;
+    }
+
+    .btn-primary{
+      background:linear-gradient(90deg, var(--brand), var(--brand-2));
+      color:#fff;
+      box-shadow:var(--shadow);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      color:#fff;
+    }
+
+    .btn:hover{transform:translateY(-2px);}
+
+    .hero-panel{
+      display:grid;
+      gap:14px;
+    }
+
+    .mini-panel{
+      background:linear-gradient(135deg, rgba(24,35,63,.92), rgba(18,27,49,.92));
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .mini-panel h3{
+      margin-bottom:10px;
+      color:#fff;
+      font-size:1.05rem;
+    }
+
+    .mini-panel p, .mini-panel li{
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .mini-panel ul{
+      padding-left:18px;
+    }
+
+    /* cards grid */
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+    .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+    .grid-auto{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
+
+    .card{
+      background:linear-gradient(180deg, rgba(26,39,70,.96), rgba(19,29,53,.96));
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    .card h3{
+      margin-bottom:12px;
+      color:#fff;
+      font-size:1.18rem;
+    }
+
+    .card h4{
+      margin:10px 0 8px;
+      color:#dce8ff;
+      font-size:1rem;
+    }
+
+    .card p, .card li{
+      color:var(--muted);
+      line-height:1.75;
+    }
+
+    .card ul, .content-box ul{
+      padding-left:20px;
+    }
+
+    .pill{
+      display:inline-block;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(110,168,255,.12);
+      border:1px solid rgba(110,168,255,.25);
+      color:#dce9ff;
+      font-size:.9rem;
+      margin:4px 8px 0 0;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+      position:relative;
+      z-index:1;
+    }
+
+    .toolbar input, .toolbar select{
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px 14px;
+      min-width:180px;
+      outline:none;
+    }
+
+    .toolbar input::placeholder{color:#9db0d2;}
+
+    .content-box{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      margin-top:14px;
+      white-space:pre-wrap;
+      line-height:1.8;
+      color:#eaf2ff;
+    }
+
+    .muted{color:var(--muted);}
+    .small{font-size:.95rem;}
+    .center{text-align:center;}
+
+    /* topic cards */
+    .topic-card summary{
+      list-style:none;
+      cursor:pointer;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      font-weight:700;
+      color:#fff;
+      font-size:1.05rem;
+    }
+
+    .topic-card summary::-webkit-details-marker{display:none;}
+    .topic-card details{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .topic-card details[open]{
+      background:rgba(255,255,255,.04);
+    }
+
+    .topic-body{
+      margin-top:14px;
+      padding-top:12px;
+      border-top:1px solid var(--line);
+    }
+
+    .formula-box{
+      margin-top:14px;
+      background:rgba(8,13,27,.48);
+      border:1px solid rgba(255,255,255,.06);
+      border-left:4px solid var(--brand);
+      border-radius:14px;
+      padding:14px;
+      color:#f5f9ff;
+      white-space:pre-wrap;
+      line-height:1.8;
+    }
+
+    .history-box{
+      margin-top:12px;
+      background:rgba(255,209,102,.07);
+      border:1px solid rgba(255,209,102,.16);
+      border-radius:14px;
+      padding:14px;
+      color:#fff4d4;
+      line-height:1.8;
+    }
+
+    /* calculator area */
+    .calc-zone{
+      display:grid;
+      grid-template-columns:340px 1fr;
+      gap:18px;
+    }
+
+    .calc-menu{
+      background:linear-gradient(180deg, rgba(26,39,70,.96), rgba(19,29,53,.96));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:18px;
+      height:max-content;
+      position:sticky;
+      top:20px;
+    }
+
+    .calc-menu h3{margin-bottom:12px;}
+    .calc-list{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .calc-item{
+      background:rgba(255,255,255,.04);
+      border:1px solid transparent;
+      color:#fff;
+      padding:11px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      text-align:left;
+      transition:.25s;
+      font-weight:600;
+    }
+
+    .calc-item:hover, .calc-item.active{
+      border-color:rgba(110,168,255,.28);
+      background:linear-gradient(90deg, rgba(110,168,255,.14), rgba(140,123,255,.08));
+    }
+
+    .calc-display{
+      background:linear-gradient(180deg, rgba(26,39,70,.96), rgba(19,29,53,.96));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:20px;
+      min-height:500px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .form-grid input, .form-grid select, textarea{
+      width:100%;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      outline:none;
+    }
+
+    .result-box{
+      margin-top:16px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      white-space:pre-wrap;
+      line-height:1.8;
+      color:#eef5ff;
+    }
+
+    /* prova mode */
+    .quiz-wrap{
+      display:grid;
+      grid-template-columns:1fr 360px;
+      gap:18px;
+    }
+
+    .question-box{
+      background:linear-gradient(180deg, rgba(26,39,70,.96), rgba(19,29,53,.96));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:20px;
+    }
+
+    .option{
+      width:100%;
+      text-align:left;
+      margin-top:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .option:hover{
+      background:rgba(255,255,255,.07);
+    }
+
+    .option.correct{
+      border-color:rgba(34,197,94,.55);
+      background:rgba(34,197,94,.12);
+    }
+
+    .option.wrong{
+      border-color:rgba(255,107,107,.55);
+      background:rgba(255,107,107,.10);
+    }
+
+    .score-box{
+      background:linear-gradient(180deg, rgba(26,39,70,.96), rgba(19,29,53,.96));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:20px;
+      height:max-content;
+    }
+
+    /* chat */
+    .chat-layout{
+      display:grid;
+      grid-template-columns:1fr 340px;
+      gap:18px;
+    }
+
+    .chatbox{
+      height:470px;
+      overflow-y:auto;
+      border-radius:20px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      padding:18px;
+    }
+
+    .msg{
+      max-width:82%;
+      padding:13px 15px;
+      border-radius:16px;
+      margin:12px 0;
+      line-height:1.75;
+      white-space:pre-wrap;
+    }
+
+    .msg.bot{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.05);
+      color:#f3f7ff;
+    }
+
+    .msg.user{
+      background:linear-gradient(90deg, var(--brand), var(--brand-2));
+      color:#fff;
+      margin-left:auto;
+      box-shadow:var(--shadow);
+    }
+
+    .chat-controls{
+      display:flex;
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .chat-controls input{
+      flex:1;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      outline:none;
+    }
+
+    /* chart */
+    .chart-wrap{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      overflow:auto;
+    }
+
+    canvas{
+      max-width:100%;
+    }
+
+    /* apple animation */
+    .apple{
+      position:fixed;
+      top:-80px;
+      width:48px;
+      height:48px;
+      border-radius:50%;
+      background:radial-gradient(circle at 35% 30%, #ff9b9b, #cf1f1f 70%);
+      box-shadow:inset -6px -10px 12px rgba(0,0,0,.18), 0 10px 24px rgba(0,0,0,.35);
+      z-index:9999;
+      animation:fallApple 2.2s ease-in forwards;
+    }
+
+    .apple::before{
+      content:"";
+      position:absolute;
+      width:5px;
+      height:16px;
+      background:#5b3a1a;
+      top:-10px;
+      left:22px;
+      border-radius:4px;
+      transform:rotate(-10deg);
+    }
+
+    .apple::after{
+      content:"";
+      position:absolute;
+      width:18px;
+      height:10px;
+      background:#38a169;
+      top:-2px;
+      left:26px;
+      border-radius:18px 18px 0 18px;
+      transform:rotate(-24deg);
+    }
+
+    @keyframes fallApple{
+      0%{transform:translateY(-100px) rotate(0deg);}
+      70%{transform:translateY(80vh) rotate(300deg);}
+      85%{transform:translateY(calc(80vh - 24px)) rotate(335deg);}
+      100%{transform:translateY(82vh) rotate(360deg); opacity:0;}
+    }
+
+    /* fireworks */
+    .firework{
+      position:fixed;
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      pointer-events:none;
+      z-index:9999;
+      animation:boom 900ms ease-out forwards;
+    }
+
+    @keyframes boom{
+      0%{transform:translate(0,0) scale(1); opacity:1;}
+      100%{transform:translate(var(--x), var(--y)) scale(.2); opacity:0;}
+    }
+
+    /* mobile */
+    .mobile-toggle{
+      display:none;
+      position:fixed;
+      top:12px;
+      left:12px;
+      z-index:50;
+      border:none;
+      border-radius:14px;
+      padding:12px 14px;
+      background:linear-gradient(90deg, var(--brand), var(--brand-2));
+      color:#fff;
+      box-shadow:var(--shadow);
+      font-weight:700;
+    }
+
+    @media (max-width: 1100px){
+      body{display:block;}
+      .sidebar{
+        position:fixed;
+        left:-320px;
+        top:0;
+        transition:.3s;
+      }
+      .sidebar.open{left:0;}
+      .mobile-toggle{display:block;}
+      .main{padding:70px 14px 22px;}
+      .hero, .calc-zone, .quiz-wrap, .chat-layout{grid-template-columns:1fr;}
+      .grid-3, .grid-4, .grid-2{grid-template-columns:1fr;}
+      .calc-menu{position:static;}
+    }
+  </style>
+</head>
+<body>
+  <button class="mobile-toggle" id="mobileToggle">Menu</button>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand-box">
+      <h1>Academia DAP</h1>
+      <p>
+        Plataforma escolar de Matemática e Física com teoria completa,
+        história das fórmulas, cientistas, calculadoras, gráficos, exercícios
+        e um tutor inteligente para estudo.
+      </p>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-title">Principal</div>
+      <nav class="menu">
+        <a href="#inicio">Início</a>
+        <a href="#classes">Matérias por classe</a>
+        <a href="#matematica">Matemática</a>
+        <a href="#fisica">Física</a>
+        <a href="#calculadoras">Calculadoras</a>
+        <a href="#graficos">Gráficos de funções</a>
+        <a href="#prova">Modo estudar para prova</a>
+        <a href="#ia">Tutor IA</a>
+        <a href="#videos">Vídeos e apoio</a>
+      </nav>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-title">Ferramentas</div>
+      <button class="sidebar-btn" id="themeBtn">Alternar tema</button>
+      <button class="sidebar-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Voltar ao topo</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section id="inicio" class="section hero">
+      <div class="hero-card">
+        <h2>Academia DAP</h2>
+        <p>
+          A Academia DAP foi pensada como um portal escolar completo para alunos que querem estudar
+          Matemática e Física de forma séria, organizada e profunda. Em vez de trazer apenas resumos,
+          este site reúne explicações longas, interpretações intuitivas, contexto histórico, fórmulas
+          isoladas, exercícios resolvidos, treino para prova, gráficos e uma área de apoio com tutor IA.
+          O objetivo é que um aluno consiga abrir o site e não apenas decorar fórmulas, mas entender
+          por que elas existem, o que significam, quando usar, como isolar incógnitas e como raciocinar
+          em problemas que à primeira vista parecem diferentes.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#matematica">Entrar em Matemática</a>
+          <a class="btn btn-secondary" href="#fisica">Entrar em Física</a>
+          <a class="btn btn-secondary" href="#calculadoras">Abrir Calculadoras</a>
+        </div>
+      </div>
+
+      <div class="hero-panel">
+        <div class="mini-panel">
+          <h3>O que há nesta versão</h3>
+          <ul>
+            <li>Conteúdos de Matemática e Física com explicações mais longas.</li>
+            <li>História das leis, fórmulas e cientistas importantes.</li>
+            <li>Área dedicada a calculadoras escolares.</li>
+            <li>Modo de estudo para prova com perguntas e pontuação.</li>
+            <li>Gráficos de funções afins, quadráticas e exponenciais.</li>
+          </ul>
+        </div>
+
+        <div class="mini-panel">
+          <h3>Como estudar melhor aqui</h3>
+          <p>
+            A melhor ordem é: primeiro ler a teoria, depois observar as fórmulas já isoladas,
+            em seguida testar as calculadoras, e por fim treinar no modo prova. Se tiveres uma dúvida
+            específica, usa o Tutor IA e pede para explicar passo a passo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="classes" class="section">
+      <h2 class="section-title">Matérias por classe</h2>
+      <p class="section-sub">
+        Esta secção organiza os conteúdos de forma escolar. A divisão abaixo é flexível, porque cada escola
+        e cada país pode distribuir os temas de forma um pouco diferente, mas serve como um mapa de estudo.
+      </p>
+
+      <div class="grid-auto">
+        <div class="card">
+          <h3>8ª classe</h3>
+          <p>
+            Números inteiros e racionais, frações, potências, regra de sinais, equações do 1º grau,
+            razões, proporções, regra de três, porcentagem, noções iniciais de geometria e gráficos simples.
+          </p>
+          <div class="pill">Aritmética</div>
+          <div class="pill">Equações básicas</div>
+          <div class="pill">Porcentagem</div>
+        </div>
+
+        <div class="card">
+          <h3>9ª classe</h3>
+          <p>
+            Produtos notáveis, fatoração, equações do 2º grau, funções afins e quadráticas,
+            semelhança, teorema de Pitágoras, trigonometria inicial, estatística básica e geometria plana.
+          </p>
+          <div class="pill">Bhaskara</div>
+          <div class="pill">Funções</div>
+          <div class="pill">Pitágoras</div>
+        </div>
+
+        <div class="card">
+          <h3>10ª classe</h3>
+          <p>
+            Funções mais aprofundadas, progressões, probabilidade, sistemas, trigonometria,
+            vetores básicos, cinemática, velocidade média, MRU, MRUV, leis de Newton e trabalho.
+          </p>
+          <div class="pill">Cinemática</div>
+          <div class="pill">PA e PG</div>
+          <div class="pill">Leis de Newton</div>
+        </div>
+
+        <div class="card">
+          <h3>11ª e 12ª classe</h3>
+          <p>
+            Exponenciais, logaritmos, análise de funções, geometria espacial, probabilidade mais elaborada,
+            energia, impulso, eletricidade, oscilações, ondas e aprofundamento geral de problemas.
+          </p>
+          <div class="pill">Exponenciais</div>
+          <div class="pill">Energia</div>
+          <div class="pill">Eletricidade</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="matematica" class="section">
+      <h2 class="section-title">Matemática</h2>
+      <p class="section-sub">
+        A Matemática é apresentada aqui não como uma lista de fórmulas soltas, mas como uma linguagem
+        de padrões, relações e estruturas. Sempre que possível, cada conteúdo é mostrado com
+        definição, interpretação, procedimento, erro comum e exemplo.
+      </p>
+
+      <div class="toolbar">
+        <input type="text" id="mathSearch" placeholder="Pesquisar tema de matemática..." />
+        <select id="mathFilterClass">
+          <option value="todas">Todas as classes</option>
+          <option value="8">8ª classe</option>
+          <option value="9">9ª classe</option>
+          <option value="10">10ª classe</option>
+          <option value="11">11ª/12ª classe</option>
+        </select>
+      </div>
+
+      <div id="mathTopics" class="grid-auto"></div>
+    </section>
+
+    <section id="fisica" class="section">
+      <h2 class="section-title">Física</h2>
+      <p class="section-sub">
+        A Física tenta descrever a natureza por meio de grandezas, medições, modelos e leis.
+        Neste portal, cada tema é apresentado com significado físico, história, fórmulas,
+        interpretação das unidades e exemplos do dia a dia e de prova.
+      </p>
+
+      <div class="toolbar">
+        <input type="text" id="physicsSearch" placeholder="Pesquisar tema de física..." />
+        <select id="physicsFilterClass">
+          <option value="todas">Todas as classes</option>
+          <option value="10">10ª classe</option>
+          <option value="11">11ª classe</option>
+          <option value="12">12ª classe</option>
+        </select>
+      </div>
+
+      <div id="physicsTopics" class="grid-auto"></div>
+    </section>
+
+    <section id="calculadoras" class="section">
+      <h2 class="section-title">Calculadoras escolares</h2>
+      <p class="section-sub">
+        Esta área foi criada para concentrar cálculos úteis num só lugar. A ideia é que o aluno
+        não precise ficar à procura de uma fórmula toda vez que quiser resolver um exercício.
+        Escolhe uma calculadora no menu lateral da área e preenche os dados conhecidos.
+      </p>
+
+      <div class="calc-zone">
+        <div class="calc-menu">
+          <h3>Calculadoras disponíveis</h3>
+          <div class="calc-list" id="calcList"></div>
+        </div>
+
+        <div class="calc-display">
+          <h3 id="calcTitle">Calculadora</h3>
+          <p class="muted" id="calcDesc">
+            Escolhe uma calculadora para começar.
+          </p>
+          <div id="calcBody"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="graficos" class="section">
+      <h2 class="section-title">Gráficos de funções</h2>
+      <p class="section-sub">
+        Visualizar o gráfico ajuda a perceber comportamento, crescimento, decrescimento, raízes,
+        interceptos e concavidade. Nesta primeira parte da V3, o site já desenha gráficos de
+        função afim, quadrática e exponencial.
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Gerador de gráfico</h3>
+          <select id="graphType">
+            <option value="afim">Função afim — f(x)=ax+b</option>
+            <option value="quad">Função quadrática — f(x)=ax²+bx+c</option>
+            <option value="exp">Função exponencial — f(x)=a^x</option>
+          </select>
+
+          <div class="form-grid">
+            <input id="gA" type="number" placeholder="a" value="1">
+            <input id="gB" type="number" placeholder="b" value="0">
+            <input id="gC" type="number" placeholder="c (só quadrática)" value="0">
+          </div>
+
+          <button class="btn btn-primary" style="margin-top:12px" onclick="drawGraph()">Gerar gráfico</button>
+
+          <div class="content-box" id="graphExplanation">
+            Introduz os coeficientes e gera o gráfico.
+          </div>
+        </div>
+
+        <div class="chart-wrap">
+          <canvas id="graphCanvas" width="760" height="420"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section id="prova" class="section">
+      <h2 class="section-title">Modo estudar para prova</h2>
+      <p class="section-sub">
+        Aqui o aluno treina questões rápidas. Ao acertar, o site celebra com fogos de artifício.
+        A lógica desta área pode ser expandida depois com muito mais perguntas, níveis e provas simuladas.
+      </p>
+
+      <div class="quiz-wrap">
+        <div class="question-box">
+          <div class="toolbar">
+            <select id="quizSubject">
+              <option value="mat">Matemática</option>
+              <option value="fis">Física</option>
+            </select>
+
+            <select id="quizLevel">
+              <option value="facil">Fácil</option>
+              <option value="medio">Médio</option>
+              <option value="dificil">Difícil</option>
+            </select>
+
+            <button class="btn btn-primary" onclick="generateQuiz()">Gerar questão</button>
+          </div>
+
+          <div class="content-box" id="quizQuestion">
+            Clica em “Gerar questão” para começar.
+          </div>
+
+          <div id="quizOptions"></div>
+          <div class="result-box" id="quizFeedback"></div>
+        </div>
+
+        <div class="score-box">
+          <h3>Painel de desempenho</h3>
+          <p class="muted">Acompanha os teus acertos nesta sessão.</p>
+          <div class="content-box" id="scoreBox">
+            Pontuação: 0
+            Acertos: 0
+            Erros: 0
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ia" class="section">
+      <h2 class="section-title">Tutor IA da Academia DAP</h2>
+      <p class="section-sub">
+        Este tutor foi desenhado para parecer mais um assistente de estudo do que um chat de respostas curtas.
+        Ele tenta explicar conceitos, dar exemplos, contextualizar fórmulas, falar de cientistas e também
+        responder perguntas gerais sobre o próprio site. Como esta é uma versão offline em HTML puro,
+        a IA funciona com uma base grande de conhecimento preparada no JavaScript, em vez de internet.
+      </p>
+
+      <div class="chat-layout">
+        <div>
+          <div class="chatbox" id="chatbox">
+            <div class="msg bot">
+Bem-vindo à Academia DAP.
+
+Podes perguntar, por exemplo:
+- “Explica equações exponenciais do zero”
+- “Como isolar a velocidade na fórmula do MRU?”
+- “Quem foi Newton e como surgiram as suas leis?”
+- “Explica trabalho de uma força com exemplos”
+- “Quem criou este site?”
+            </div>
+          </div>
+
+          <div class="chat-controls">
+            <input id="chatInput" type="text" placeholder="Escreve a tua pergunta..." />
+            <button class="btn btn-primary" onclick="sendMessage()">Enviar</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>O que o tutor consegue fazer</h3>
+          <ul>
+            <li>Explicar conceitos de Matemática e Física em linguagem simples.</li>
+            <li>Falar da história de fórmulas e cientistas importantes.</li>
+            <li>Explicar como isolar incógnitas em várias fórmulas.</li>
+            <li>Responder perguntas sobre o próprio site e a Academia DAP.</li>
+            <li>Dar exemplos de aplicação e comparar temas parecidos.</li>
+          </ul>
+
+          <h4>Observação</h4>
+          <p>
+            Como esta IA está embutida no HTML, ela não é infinita como um serviço online real,
+            mas nesta V3 ela já está muito mais aberta e contextual.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="videos" class="section">
+      <h2 class="section-title">Vídeos e apoio complementar</h2>
+      <div class="grid-auto">
+        <div class="card">
+          <h3>Canal do Sandro Curió</h3>
+          <p>
+            Excelente para reforço, treino de questões e revisão de matemática.
+          </p>
+          <a class="btn btn-primary" href="https://www.youtube.com/@dicasdematsandrocurio" target="_blank">Abrir canal</a>
+        </div>
+
+        <div class="card">
+          <h3>Estudo recomendado</h3>
+          <p>
+            Usa os vídeos como complemento, mas não substitui a leitura da teoria e a resolução de exercícios.
+            O ideal é: teoria → exemplos → calculadora → treino.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Como tirar melhor proveito</h3>
+          <p>
+            Ao ver um vídeo, tenta pausar antes da resolução final e resolver sozinho. Depois compara o teu
+            raciocínio com o do professor e volta ao portal para praticar mais.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /**************************************************************
+     * ACADEMIA DAP - V3 PARTE 1
+     **************************************************************/
+
+    /* ========== MENU MOBILE E TEMA ========== */
+    const sidebar = document.getElementById("sidebar");
+    const mobileToggle = document.getElementById("mobileToggle");
+    const themeBtn = document.getElementById("themeBtn");
+
+    mobileToggle.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+    });
+
+    let darkMode = true;
+    themeBtn.addEventListener("click", () => {
+      darkMode = !darkMode;
+      if (!darkMode) {
+        document.documentElement.style.setProperty('--bg','#edf3ff');
+        document.documentElement.style.setProperty('--bg-soft','#dbe7ff');
+        document.documentElement.style.setProperty('--panel','#ffffff');
+        document.documentElement.style.setProperty('--panel-2','#f5f8ff');
+        document.documentElement.style.setProperty('--card','#ffffff');
+        document.documentElement.style.setProperty('--card-2','#f8fbff');
+        document.documentElement.style.setProperty('--text','#132038');
+        document.documentElement.style.setProperty('--muted','#42526f');
+        document.documentElement.style.setProperty('--line','rgba(20,32,56,.08)');
+      } else {
+        document.documentElement.style.setProperty('--bg','#0b1020');
+        document.documentElement.style.setProperty('--bg-soft','#11182d');
+        document.documentElement.style.setProperty('--panel','#121b31');
+        document.documentElement.style.setProperty('--panel-2','#18233f');
+        document.documentElement.style.setProperty('--card','#1a2746');
+        document.documentElement.style.setProperty('--card-2','#22345d');
+        document.documentElement.style.setProperty('--text','#eef4ff');
+        document.documentElement.style.setProperty('--muted','#c5d2ea');
+        document.documentElement.style.setProperty('--line','rgba(255,255,255,0.08)');
+      }
+    });
+
+    /* ========== BASE DE DADOS MATEMÁTICA ========== */
+    const mathData = [
+      {
+        classe:"8",
+        titulo:"Números, operações e propriedades",
+        descricao:"Base de toda a matemática escolar: inteiros, racionais, prioridade de operações, sinais, potências e simplificações.",
+        teoria:[
+          "Quando um aluno começa a errar em álgebra, muitas vezes o problema não está na equação em si, mas em operações elementares mal consolidadas. Por isso, esta base é decisiva.",
+          "É importante distinguir número natural, inteiro, racional e irracional, porque isso influencia a interpretação de resultados e de operações como raiz e fração.",
+          "As propriedades distributiva, associativa e comutativa aparecem constantemente em simplificações algébricas.",
+          "Potências ajudam a representar multiplicações repetidas e serão essenciais para equações exponenciais, notação científica e funções."
+        ],
+        formula:`Exemplos fundamentais:
+a + b = b + a  (comutativa da adição)
+a(b + c) = ab + ac  (distributiva)
+a^m · a^n = a^(m+n)
+a^m / a^n = a^(m-n), com a ≠ 0`,
+        historia:`O desenvolvimento dos sistemas numéricos foi gradual. Povos antigos usavam contagem para comércio, agricultura e astronomia. A formalização moderna dos conjuntos numéricos veio muito depois, quando a matemática precisou descrever não apenas contagens, mas dívidas, razões, medidas e quantidades irracionais como √2.`
+      },
+      {
+        classe:"8",
+        titulo:"Equação do 1º grau",
+        descricao:"Equações lineares do tipo ax + b = 0 e problemas que conduzem a uma incógnita.",
+        teoria:[
+          "Uma equação do 1º grau representa uma igualdade em que a incógnita aparece com expoente 1. O objetivo é descobrir qual valor torna a igualdade verdadeira.",
+          "Resolver uma equação é isolar a incógnita, preservando o equilíbrio da igualdade. Tudo o que se faz de um lado deve respeitar a lógica algébrica da igualdade.",
+          "Erros comuns: trocar o sinal sem entender o motivo, esquecer a distributiva e dividir por zero."
+        ],
+        formula:`Forma geral:
+ax + b = 0, com a ≠ 0
+
+Resolução:
+ax = -b
+x = -b/a`,
+        historia:`As equações lineares são das formas mais antigas de modelação matemática. Surgem naturalmente em problemas de partilha, comércio, comparação de preços, movimento uniforme e relações proporcionais.`
+      },
+      {
+        classe:"9",
+        titulo:"Equação do 2º grau",
+        descricao:"Equações quadráticas, discriminante, raízes reais e interpretação geométrica.",
+        teoria:[
+          "Uma equação do 2º grau tem a forma ax² + bx + c = 0, com a ≠ 0. O termo x² torna o comportamento mais rico do que numa equação linear.",
+          "O discriminante Δ = b² - 4ac informa o tipo de raiz: duas reais distintas, duas reais iguais ou nenhuma real.",
+          "Resolver uma equação quadrática não é apenas obter números; também é compreender interseções da parábola com o eixo x."
+        ],
+        formula:`Δ = b² - 4ac
+x = (-b ± √Δ)/(2a)`,
+        historia:`Métodos para resolver equações quadráticas existem desde a Antiguidade, mas a forma simbólica ensinada hoje se consolidou ao longo do desenvolvimento da álgebra. A expressão conhecida como fórmula de Bhaskara ficou popular em países lusófonos, embora a resolução de quadráticas seja muito anterior a Bhaskara.`,
+      },
+      {
+        classe:"9",
+        titulo:"Função afim",
+        descricao:"Função do tipo f(x)=ax+b, interpretação do coeficiente angular e linear.",
+        teoria:[
+          "A função afim modela crescimento ou decrescimento constante. Se a aumenta 2, por exemplo, a taxa de variação permanece a mesma em qualquer ponto.",
+          "O coeficiente angular a indica inclinação e taxa de variação; o coeficiente linear b indica onde a reta corta o eixo y.",
+          "A raiz da função é o valor de x para o qual f(x)=0."
+        ],
+        formula:`f(x)=ax+b
+Raiz: x = -b/a, se a ≠ 0`,
+        historia:`Funções lineares são usadas há séculos em problemas de proporcionalidade, comércio, física e geometria analítica. Tornaram-se centrais quando a matemática passou a descrever fenómenos por gráficos e coordenadas.`
+      },
+      {
+        classe:"9",
+        titulo:"Função quadrática",
+        descricao:"Parábola, concavidade, raízes, vértice e interpretação do discriminante no gráfico.",
+        teoria:[
+          "A função quadrática f(x)=ax²+bx+c gera uma parábola. Se a>0, a concavidade é voltada para cima; se a<0, para baixo.",
+          "As raízes são os pontos em que o gráfico corta o eixo x. O vértice indica máximo ou mínimo da função.",
+          "É muito usada para estudar lançamentos, áreas, otimização e várias situações geométricas."
+        ],
+        formula:`f(x)=ax²+bx+c
+xv = -b/(2a)
+yv = -Δ/(4a)`,
+        historia:`A relação entre equações quadráticas e parábolas tornou-se muito importante com o avanço da geometria analítica, especialmente a partir de Descartes e Fermat.`
+      },
+      {
+        classe:"10",
+        titulo:"Progressões aritméticas e geométricas",
+        descricao:"Sequências com padrão constante de diferença ou razão.",
+        teoria:[
+          "Uma progressão aritmética (PA) cresce ou decresce somando sempre a mesma quantidade. Já numa progressão geométrica (PG), multiplica-se sempre pelo mesmo fator.",
+          "PA aparece em padrões lineares; PG aparece em crescimento multiplicativo, juros compostos, populações e funções exponenciais."
+        ],
+        formula:`PA: an = a1 + (n-1)r
+PG: an = a1·q^(n-1)`,
+        historia:`Sequências são estudadas desde a matemática antiga. O interesse por somas, padrões e crescimento acumulado levou à formalização das progressões, muito úteis em finanças, astronomia e análise.`
+      },
+      {
+        classe:"11",
+        titulo:"Equações exponenciais",
+        descricao:"Equações em que a incógnita aparece no expoente.",
+        teoria:[
+          "A principal ideia numa equação exponencial é tentar escrever os dois lados com a mesma base. Quando isso é possível, igualam-se os expoentes.",
+          "Se não for possível reescrever com bases convenientes, entram em cena os logaritmos, que são justamente o instrumento matemático criado para lidar com expoentes de forma mais flexível.",
+          "Equações exponenciais surgem em crescimento populacional, juros compostos, decaimento radioativo, propagação de epidemias e modelos de duplicação."
+        ],
+        formula:`Exemplos:
+2^x = 8  →  2^x = 2^3  → x = 3
+3^(x+1)=81 → 3^(x+1)=3^4 → x=3`,
+        historia:`A necessidade de lidar com crescimento multiplicativo levou ao desenvolvimento de tabelas e métodos que mais tarde se ligariam aos logaritmos. O estudo das exponenciais ganhou força com problemas de astronomia, navegação, finanças e física.`
+      },
+      {
+        classe:"11",
+        titulo:"Logaritmos e equações logarítmicas",
+        descricao:"Inversão de exponenciais, propriedades e resolução de equações.",
+        teoria:[
+          "O logaritmo responde à pergunta: a que expoente a base deve ser elevada para produzir certo número?",
+          "Se log_a(b)=x, então a^x=b. Essa ponte entre logaritmo e exponencial é o coração do tema.",
+          "É obrigatório verificar o domínio: o argumento do logaritmo deve ser positivo."
+        ],
+        formula:`log_a(b)=x  ↔  a^x=b
+log_a(xy)=log_a(x)+log_a(y)
+log_a(x/y)=log_a(x)-log_a(y)`,
+        historia:`Os logaritmos foram desenvolvidos no início do século XVII para simplificar cálculos longos, especialmente em astronomia e navegação. John Napier e Henry Briggs tiveram papel central na difusão dessas ideias.`
+      },
+      {
+        classe:"10",
+        titulo:"Trigonometria no triângulo retângulo",
+        descricao:"Seno, cosseno e tangente como relações entre lados e ângulos.",
+        teoria:[
+          "A trigonometria nasce da necessidade de relacionar ângulos e comprimentos. No triângulo retângulo, seno, cosseno e tangente permitem determinar medidas sem medir diretamente.",
+          "Essas relações são fundamentais em física, topografia, engenharia e navegação."
+        ],
+        formula:`sen θ = cateto oposto / hipotenusa
+cos θ = cateto adjacente / hipotenusa
+tg θ = cateto oposto / cateto adjacente`,
+        historia:`A trigonometria tem raízes profundas na astronomia antiga. Civilizações como a babilónica, a grega e a indiana contribuíram para a construção dessas relações.`
+      }
+    ];
+
+    /* ========== BASE DE DADOS FÍSICA ========== */
+    const physicsData = [
+      {
+        classe:"10",
+        titulo:"Grandezas físicas e Sistema Internacional",
+        descricao:"O ponto de partida da Física: medir, comparar, padronizar e interpretar unidades.",
+        teoria:[
+          "A Física só consegue comparar fenómenos porque transforma observações em grandezas mensuráveis. Comprimento, massa, tempo, temperatura, corrente elétrica e outras grandezas precisam de unidade.",
+          "O Sistema Internacional (SI) padroniza a linguagem das medições e evita confusões entre escalas e notações.",
+          "Antes de resolver qualquer exercício, uma das primeiras perguntas deve ser: em que unidade cada grandeza está?"
+        ],
+        formula:`Exemplos:
+comprimento → metro (m)
+massa → quilograma (kg)
+tempo → segundo (s)
+velocidade → m/s`,
+        historia:`A padronização de unidades foi um passo decisivo para o avanço da ciência. Sem padrões confiáveis, comparar experiências em lugares diferentes seria muito difícil.`
+      },
+      {
+        classe:"10",
+        titulo:"Velocidade média e deslocamento",
+        descricao:"Relação entre a variação da posição e o intervalo de tempo.",
+        teoria:[
+          "Velocidade média não significa necessariamente velocidade constante em todos os instantes. Ela representa uma razão global entre deslocamento e tempo.",
+          "É um dos conceitos mais importantes da cinemática, porque introduz a ideia de taxa de variação do espaço."
+        ],
+        formula:`v = Δs/Δt`,
+        historia:`A ideia de velocidade foi sendo refinada ao longo da história da física, especialmente com o estudo do movimento e da queda dos corpos.`
+      },
+      {
+        classe:"10",
+        titulo:"MRU",
+        descricao:"Movimento retilíneo uniforme: trajetória reta e velocidade constante.",
+        teoria:[
+          "No MRU, a aceleração é nula e o corpo percorre espaços iguais em tempos iguais.",
+          "A equação horária da posição permite saber onde o corpo estará em qualquer instante."
+        ],
+        formula:`s = s0 + vt`,
+        historia:`O estudo do movimento uniforme foi um passo essencial para a cinemática clássica, preparando o terreno para análises mais complexas de aceleração e força.`
+      },
+      {
+        classe:"10",
+        titulo:"MRUV",
+        descricao:"Movimento retilíneo uniformemente variado: aceleração constante.",
+        teoria:[
+          "Aqui a velocidade deixa de ser constante e passa a variar de maneira regular. Isso torna o movimento mais realista em muitos casos, como carros acelerando ou freando.",
+          "As três fórmulas principais do MRUV permitem relacionar posição, tempo, velocidade e aceleração."
+        ],
+        formula:`v = v0 + at
+s = s0 + v0t + at²/2
+v² = v0² + 2aΔs`,
+        historia:`O estudo da aceleração foi decisivo para a física moderna, porque permitiu diferenciar movimento uniforme de movimento com variação de velocidade.`
+      },
+      {
+        classe:"10",
+        titulo:"Leis de Newton",
+        descricao:"As leis fundamentais da dinâmica clássica.",
+        teoria:[
+          "A 1ª lei, ou princípio da inércia, diz que um corpo tende a manter o seu estado de repouso ou de movimento retilíneo uniforme se a força resultante sobre ele for nula.",
+          "A 2ª lei estabelece a relação entre força resultante e aceleração: quanto maior a força para a mesma massa, maior a aceleração; quanto maior a massa para a mesma força, menor a aceleração.",
+          "A 3ª lei afirma que as forças surgem em pares: a toda ação corresponde uma reação de mesma intensidade, mesma direção e sentido oposto."
+        ],
+        formula:`1ª lei: FR = 0 → repouso ou MRU
+2ª lei: FR = m·a
+3ª lei: ação e reação`,
+        historia:`Isaac Newton publicou as suas leis em 1687 na obra Philosophiae Naturalis Principia Mathematica. Elas sintetizaram muitos avanços anteriores e transformaram a forma como o movimento passou a ser compreendido.`,
+        newton:true
+      },
+      {
+        classe:"10",
+        titulo:"Trabalho de uma força",
+        descricao:"Medida da energia transferida por uma força ao provocar deslocamento.",
+        teoria:[
+          "No caso mais simples, quando força e deslocamento têm a mesma direção, o trabalho é o produto da intensidade da força pela distância percorrida.",
+          "O conceito é importante porque liga dinâmica e energia. Em vez de olhar apenas para forças, passamos a pensar em transferência de energia."
+        ],
+        formula:`T = F·d`,
+        historia:`O conceito de trabalho surgiu no contexto do estudo de máquinas, rendimento e transformação de energia. Foi central para o desenvolvimento da termodinâmica e da mecânica.`
+      },
+      {
+        classe:"11",
+        titulo:"Energia cinética",
+        descricao:"Energia associada ao movimento de um corpo.",
+        teoria:[
+          "Quanto maior a massa e a velocidade, maior a energia cinética. Como a velocidade aparece ao quadrado, dobrar a velocidade tem efeito muito mais forte do que dobrar a massa.",
+          "A energia cinética é uma forma útil de reinterpretar o movimento em termos energéticos."
+        ],
+        formula:`Ec = mv²/2`,
+        historia:`A noção moderna de energia foi sendo construída gradualmente. O estudo do movimento e das máquinas ajudou a consolidar a interpretação de energia como capacidade de realizar trabalho.`
+      },
+      {
+        classe:"11",
+        titulo:"Energia potencial gravitacional",
+        descricao:"Energia associada à posição de um corpo em relação a um referencial gravitacional.",
+        teoria:[
+          "Quando um corpo é elevado, ele passa a ter capacidade de realizar trabalho ao cair. Essa capacidade é modelada pela energia potencial gravitacional.",
+          "A altura importa porque representa a diferença de posição num campo gravitacional."
+        ],
+        formula:`Ep = mgh`,
+        historia:`A formalização energética permitiu unificar muitos problemas antes tratados apenas por forças.`
+      },
+      {
+        classe:"11",
+        titulo:"Potência",
+        descricao:"Rapidez com que se realiza trabalho ou se transfere energia.",
+        teoria:[
+          "Dois corpos podem realizar o mesmo trabalho, mas um pode fazê-lo mais rapidamente. É isso que a potência mede.",
+          "Na prática, potência aparece em motores, aparelhos elétricos, esforço mecânico e consumo."
+        ],
+        formula:`P = T/Δt`,
+        historia:`A noção de potência foi crucial na Revolução Industrial, porque permitiu comparar máquinas, motores e eficiência de processos.`
+      },
+      {
+        classe:"12",
+        titulo:"Oscilações mecânicas e MHS",
+        descricao:"Movimentos periódicos em torno de uma posição de equilíbrio.",
+        teoria:[
+          "Em muitos sistemas, o corpo não segue em linha reta indefinidamente, mas oscila em torno de uma posição. Isso acontece em molas, pêndulos e vibrações.",
+          "No movimento harmónico simples, grandezas como período, frequência e frequência angular ajudam a descrever a repetição temporal do movimento."
+        ],
+        formula:`f = 1/T
+ω = 2π/T`,
+        historia:`O estudo das oscilações foi essencial para relógios, acústica, vibrações mecânicas e, mais tarde, ondas e circuitos.`
+      },
+      {
+        classe:"12",
+        titulo:"Lei de Ohm",
+        descricao:"Relação entre tensão, corrente e resistência em circuitos simples.",
+        teoria:[
+          "A Lei de Ohm descreve uma relação linear entre diferença de potencial, corrente elétrica e resistência em muitos condutores.",
+          "Ela é uma das portas de entrada para a eletricidade básica e para a análise de circuitos."
+        ],
+        formula:`U = R·i`,
+        historia:`Georg Simon Ohm formulou essa relação no século XIX. O seu trabalho foi decisivo para a eletricidade quantitativa.`
+      }
+    ];
+
+    /* ========== RENDER DOS TEMAS ========== */
+    function renderTopics(data, containerId, searchText="", classFilter="todas", isPhysics=false){
+      const container = document.getElementById(containerId);
+      const term = searchText.toLowerCase().trim();
+
+      const filtered = data.filter(item => {
+        const matchesText =
+          item.titulo.toLowerCase().includes(term) ||
+          item.descricao.toLowerCase().includes(term) ||
+          item.teoria.join(" ").toLowerCase().includes(term) ||
+          item.formula.toLowerCase().includes(term) ||
+          (item.historia || "").toLowerCase().includes(term);
+
+        const matchesClass = classFilter === "todas" || item.classe === classFilter || (classFilter === "11" && item.classe === "11");
+        return matchesText && matchesClass;
+      });
+
+      if(!filtered.length){
+        container.innerHTML = `<div class="card"><p>Nenhum conteúdo encontrado para esse filtro.</p></div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map((item, idx) => {
+        const uniqueId = `${containerId}_${idx}_${item.titulo.replace(/\s+/g,'_')}`;
+        const isNewton = item.newton ? `data-newton="true"` : "";
+        return `
+          <div class="card topic-card">
+            <details ${isNewton}>
+              <summary>
+                <span>${item.titulo}</span>
+                <span class="muted small">Abrir explicação</span>
+              </summary>
+
+              <div class="topic-body">
+                <p>${item.descricao}</p>
+
+                <h4 style="margin-top:14px">Explicação</h4>
+                <ul>
+                  ${item.teoria.map(t => `<li>${t}</li>`).join("")}
+                </ul>
+
+                <div class="formula-box">${item.formula}</div>
+
+                ${item.historia ? `
+                  <div class="history-box">
+                    <strong>Contexto histórico:</strong><br>
+                    ${item.historia}
+                  </div>
+                ` : ""}
+
+                ${isPhysics ? `<div class="pill">Classe ${item.classe}</div>` : `<div class="pill">Classe ${item.classe}</div>`}
+              </div>
+            </details>
+          </div>
+        `;
+      }).join("");
+
+      attachNewtonAppleEffect(container);
+    }
+
+    const mathSearch = document.getElementById("mathSearch");
+    const mathFilterClass = document.getElementById("mathFilterClass");
+    const physicsSearch = document.getElementById("physicsSearch");
+    const physicsFilterClass = document.getElementById("physicsFilterClass");
+
+    function refreshMath(){
+      renderTopics(mathData, "mathTopics", mathSearch.value, mathFilterClass.value, false);
+    }
+
+    function refreshPhysics(){
+      renderTopics(physicsData, "physicsTopics", physicsSearch.value, physicsFilterClass.value, true);
+    }
+
+    mathSearch.addEventListener("input", refreshMath);
+    mathFilterClass.addEventListener("change", refreshMath);
+    physicsSearch.addEventListener("input", refreshPhysics);
+    physicsFilterClass.addEventListener("change", refreshPhysics);
+
+    refreshMath();
+    refreshPhysics();
+
+    /* ========== EFEITO DA MAÇÃ NAS LEIS DE NEWTON ========== */
+    function attachNewtonAppleEffect(container){
+      const details = container.querySelectorAll('details[data-newton="true"]');
+      details.forEach(d => {
+        d.addEventListener("toggle", () => {
+          if(d.open){
+            dropApple();
+          }
+        });
+      });
+    }
+
+    function dropApple(){
+      const apple = document.createElement("div");
+      apple.className = "apple";
+      apple.style.left = Math.random()*60 + 20 + "vw";
+      document.body.appendChild(apple);
+      setTimeout(() => apple.remove(), 2300);
+    }
+
+    /* ========== CALCULADORAS ========== */
+    const calculators = [
+      {
+        id:"quadratica",
+        title:"Equação do 2º grau",
+        desc:"Resolve ax² + bx + c = 0 com discriminante e raízes.",
+        render: () => `
+          <div class="form-grid">
+            <input id="qa" type="number" placeholder="a">
+            <input id="qb" type="number" placeholder="b">
+            <input id="qc" type="number" placeholder="c">
+          </div>
+          <button class="btn btn-primary" style="margin-top:12px" onclick="calcQuadratica()">Resolver</button>
+          <div class="result-box" id="calcOut"></div>
+        `
+      },
+      {
+        id:"afim",
+        title:"Função afim",
+        desc:"Calcula f(x)=ax+b para um valor de x.",
+        render: () => `
+          <div class="form-grid">
+            <input id="fa" type="number" placeholder="a">
+            <input id="fb" type="number" placeholder="b">
+            <input id="fx" type="number" placeholder="x">
+          </div>
+          <button class="btn btn-primary" style="margin-top:12px" onclick="calcAfim()">Calcular</button>
+          <div class="result-box" id="calcOut"></div>
+        `
+      },
+      {
+        id:"mru",
+        title:"MRU",
+        desc:"Calcula qualquer incógnita da fórmula s = s0 + vt.",
+        render: () => `
+          <select id="mruTarget">
+            <option value="s">Calcular s</option>
+            <option value="s0">Calcular s0</option>
+            <option value="v">Calcular v</option>
+            <option value="t">Calcular t</option>
+          </select>
+          <div class="form-grid">
+            <input id="mruS" type="number" placeholder="s">
+            <input id="mruS0" type="number" placeholder="s0">
+            <input id="mruV" type="number" placeholder="v">
+            <input id="mruT" type="number" placeholder="t">
+          </div>
+          <button class="btn btn-primary" style="margin-top:12px" onclick="calcMRU()">Calcular</button>
+          <div class="result-box" id="calcOut"></div>
+        `
+      },
+      {
+        id:"vm",
+        title:"Velocidade média",
+        desc:"Calcula v, Δs ou Δt a partir de v = Δs/Δt.",
+        render: () => `
+          <select id="vmTarget">
+            <option value="v">Calcular v</option>
+            <option value="ds">Calcular Δs</option>
+            <option value="dt">Calcular Δt</option>
+          </select>
+          <div class="form-grid">
+            <input id="vmDs" type="number" placeholder="Δs">
+            <input id="vmDt" type="number" placeholder="Δt">
+            <input id="vmV" type="number" placeholder="v">
+          </div>
+          <button class="btn btn-primary" style="margin-top:12px" onclick="calcVelMedia()">Calcular</button>
+          <div class="result-box" id="calcOut"></div>
+        `
+      },
+      {
+        id:"trabalho",
+        title:"Trabalho de uma força",
+        desc:"Usa T = F·d e permite isolar força ou distância.",
+        render: () => `
+          <select id="trabTarget">
+            <option value="t">Calcular T</option>
+            <option value="f">Calcular F</option>
+            <option value="d">Calcular d</option>
+          </select>
+          <div class="form-grid">
+            <input id="trabT" type="number" placeholder="T">
+            <input id="trabF" type="number" placeholder="F">
+            <input id="trabD" type="number" placeholder="d">
+          </div>
+          <button class="btn btn-primary" style="margin-top:12px" onclick="calcTrabalho()">Calcular</button>
+          <div class="result-box" id="calcOut"></div>
+        `
+      },
+      {
+        id:"energiaCinetica",
+        title:"Energia cinética",
+        desc:"Usa Ec = mv²/2 e pode isolar massa ou velocidade.",
+        render: () => `
+          <select id="ecTarget">
+            <option value="ec">Calcular Ec</option>
+            <option value="m">Calcular m</option>
+            <option value="v">Calcular v</option>
+          </select>
+          <div class="form-grid">
+            <input id="ecVal" type="number" placeholder="Ec">
+            <input id="ecM" type="number" placeholder="m">
+            <input id="ecV" type="number" placeholder="v">
+          </div>
+          <button class="btn btn-primary" style="margin-top:12px" onclick="calcEc()">Calcular</button>
+          <div class="result-box" id="calcOut"></div>
+        `
+      }
+    ];
+
+    const calcList = document.getElementById("calcList");
+    const calcTitle = document.getElementById("calcTitle");
+    const calcDesc = document.getElementById("calcDesc");
+    const calcBody = document.getElementById("calcBody");
+
+    function renderCalcMenu(){
+      calcList.innerHTML = calculators.map((c, i) => `
+        <button class="calc-item ${i===0?'active':''}" data-calc="${c.id}">${c.title}</button>
+      `).join("");
+
+      calcList.querySelectorAll(".calc-item").forEach(btn => {
+        btn.addEventListener("click", () => {
+          calcList.querySelectorAll(".calc-item").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          openCalculator(btn.dataset.calc);
+        });
+      });
+
+      openCalculator(calculators[0].id);
+    }
+
+    function openCalculator(id){
+      const calc = calculators.find(c => c.id === id);
+      if(!calc) return;
+      calcTitle.textContent = calc.title;
+      calcDesc.textContent = calc.desc;
+      calcBody.innerHTML = calc.render();
+    }
+
+    renderCalcMenu();
+
+    function setCalcOut(text){
+      const out = document.getElementById("calcOut");
+      if(out) out.textContent = text;
+    }
+
+    function calcQuadratica(){
+      const a = parseFloat(document.getElementById("qa").value);
+      const b = parseFloat(document.getElementById("qb").value);
+      const c = parseFloat(document.getElementById("qc").value);
+      if([a,b,c].some(v=>isNaN(v))) return setCalcOut("Preenche a, b e c.");
+      if(a===0) return setCalcOut("a não pode ser 0 numa equação do 2º grau.");
+
+      const delta = b*b - 4*a*c;
+      let txt = `Equação: ${a}x² + ${b}x + ${c} = 0\nΔ = b² - 4ac = ${delta}\n`;
+
+      if(delta < 0){
+        txt += "Não existem raízes reais.";
+      }else{
+        const x1 = (-b + Math.sqrt(delta))/(2*a);
+        const x2 = (-b - Math.sqrt(delta))/(2*a);
+        txt += `x1 = ${x1}\nx2 = ${x2}`;
+      }
+      setCalcOut(txt);
+    }
+
+    function calcAfim(){
+      const a = parseFloat(document.getElementById("fa").value);
+      const b = parseFloat(document.getElementById("fb").value);
+      const x = parseFloat(document.getElementById("fx").value);
+      if([a,b,x].some(v=>isNaN(v))) return setCalcOut("Preenche a, b e x.");
+      const y = a*x + b;
+      setCalcOut(`f(x)=ax+b\nf(${x})=${a}·${x}+${b}\nf(${x})=${y}`);
+    }
+
+    function calcMRU(){
+      const target = document.getElementById("mruTarget").value;
+      const s = parseFloat(document.getElementById("mruS").value);
+      const s0 = parseFloat(document.getElementById("mruS0").value);
+      const v = parseFloat(document.getElementById("mruV").value);
+      const t = parseFloat(document.getElementById("mruT").value);
+
+      if(target==="s"){
+        if([s0,v,t].some(x=>isNaN(x))) return setCalcOut("Para calcular s, preenche s0, v e t.");
+        return setCalcOut(`s = s0 + vt\ns = ${s0} + ${v}·${t}\ns = ${s0 + v*t}`);
+      }
+      if(target==="s0"){
+        if([s,v,t].some(x=>isNaN(x))) return setCalcOut("Para calcular s0, preenche s, v e t.");
+        return setCalcOut(`s0 = s - vt\ns0 = ${s} - ${v}·${t}\ns0 = ${s - v*t}`);
+      }
+      if(target==="v"){
+        if([s,s0,t].some(x=>isNaN(x))) return setCalcOut("Para calcular v, preenche s, s0 e t.");
+        return setCalcOut(`v = (s-s0)/t\nv = (${s}-${s0})/${t}\nv = ${(s-s0)/t}`);
+      }
+      if(target==="t"){
+        if([s,s0,v].some(x=>isNaN(x))) return setCalcOut("Para calcular t, preenche s, s0 e v.");
+        return setCalcOut(`t = (s-s0)/v\nt = (${s}-${s0})/${v}\nt = ${(s-s0)/v}`);
+      }
+    }
+
+    function calcVelMedia(){
+      const target = document.getElementById("vmTarget").value;
+      const ds = parseFloat(document.getElementById("vmDs").value);
+      const dt = parseFloat(document.getElementById("vmDt").value);
+      const v = parseFloat(document.getElementById("vmV").value);
+
+      if(target==="v"){
+        if([ds,dt].some(x=>isNaN(x))) return setCalcOut("Preenche Δs e Δt.");
+        return setCalcOut(`v = Δs/Δt\nv = ${ds}/${dt}\nv = ${ds/dt}`);
+      }
+      if(target==="ds"){
+        if([v,dt].some(x=>isNaN(x))) return setCalcOut("Preenche v e Δt.");
+        return setCalcOut(`Δs = v·Δt\nΔs = ${v}·${dt}\nΔs = ${v*dt}`);
+      }
+      if(target==="dt"){
+        if([ds,v].some(x=>isNaN(x))) return setCalcOut("Preenche Δs e v.");
+        return setCalcOut(`Δt = Δs/v\nΔt = ${ds}/${v}\nΔt = ${ds/v}`);
+      }
+    }
+
+    function calcTrabalho(){
+      const target = document.getElementById("trabTarget").value;
+      const T = parseFloat(document.getElementById("trabT").value);
+      const F = parseFloat(document.getElementById("trabF").value);
+      const D = parseFloat(document.getElementById("trabD").value);
+
+      if(target==="t"){
+        if([F,D].some(x=>isNaN(x))) return setCalcOut("Preenche F e d.");
+        return setCalcOut(`T = F·d\nT = ${F}·${D}\nT = ${F*D}`);
+      }
+      if(target==="f"){
+        if([T,D].some(x=>isNaN(x))) return setCalcOut("Preenche T e d.");
+        return setCalcOut(`F = T/d\nF = ${T}/${D}\nF = ${T/D}`);
+      }
+      if(target==="d"){
+        if([T,F].some(x=>isNaN(x))) return setCalcOut("Preenche T e F.");
+        return setCalcOut(`d = T/F\nd = ${T}/${F}\nd = ${T/F}`);
+      }
+    }
+
+    function calcEc(){
+      const target = document.getElementById("ecTarget").value;
+      const Ec = parseFloat(document.getElementById("ecVal").value);
+      const m = parseFloat(document.getElementById("ecM").value);
+      const v = parseFloat(document.getElementById("ecV").value);
+
+      if(target==="ec"){
+        if([m,v].some(x=>isNaN(x))) return setCalcOut("Preenche m e v.");
+        return setCalcOut(`Ec = mv²/2\nEc = ${m}·${v}²/2\nEc = ${m*v*v/2}`);
+      }
+      if(target==="m"){
+        if([Ec,v].some(x=>isNaN(x))) return setCalcOut("Preenche Ec e v.");
+        return setCalcOut(`m = 2Ec/v²\nm = 2·${Ec}/${v*v}\nm = ${(2*Ec)/(v*v)}`);
+      }
+      if(target==="v"){
+        if([Ec,m].some(x=>isNaN(x))) return setCalcOut("Preenche Ec e m.");
+        return setCalcOut(`v = √(2Ec/m)\nv = √(2·${Ec}/${m})\nv = ${Math.sqrt((2*Ec)/m)}`);
+      }
+    }
+
+    /* ========== GRÁFICOS ========== */
+    const graphCanvas = document.getElementById("graphCanvas");
+    const ctx = graphCanvas.getContext("2d");
+
+    function drawAxes(){
+      ctx.clearRect(0,0,graphCanvas.width,graphCanvas.height);
+      ctx.fillStyle = "#0e1730";
+      ctx.fillRect(0,0,graphCanvas.width,graphCanvas.height);
+
+      const w = graphCanvas.width;
+      const h = graphCanvas.height;
+      const cx = w/2;
+      const cy = h/2;
+
+      ctx.strokeStyle = "rgba(255,255,255,.12)";
+      ctx.lineWidth = 1;
+
+      for(let x=0; x<=w; x+=40){
+        ctx.beginPath();
+        ctx.moveTo(x,0);
+        ctx.lineTo(x,h);
+        ctx.stroke();
+      }
+      for(let y=0; y<=h; y+=40){
+        ctx.beginPath();
+        ctx.moveTo(0,y);
+        ctx.lineTo(w,y);
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = "#dce9ff";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0,cy);
+      ctx.lineTo(w,cy);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(cx,0);
+      ctx.lineTo(cx,h);
+      ctx.stroke();
+    }
+
+    function mapX(x){ return graphCanvas.width/2 + x*40; }
+    function mapY(y){ return graphCanvas.height/2 - y*40; }
+
+    function drawGraph(){
+      const type = document.getElementById("graphType").value;
+      const a = parseFloat(document.getElementById("gA").value) || 0;
+      const b = parseFloat(document.getElementById("gB").value) || 0;
+      const c = parseFloat(document.getElementById("gC").value) || 0;
+      const exp = document.getElementById("graphExplanation");
+
+      drawAxes();
+
+      ctx.strokeStyle = "#7cc4ff";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+
+      let started = false;
+      for(let x=-9; x<=9; x+=0.05){
+        let y = 0;
+        if(type==="afim") y = a*x + b;
+        if(type==="quad") y = a*x*x + b*x + c;
+        if(type==="exp") y = Math.pow(a || 1, x);
+
+        const px = mapX(x);
+        const py = mapY(y);
+
+        if(!started){
+          ctx.moveTo(px, py);
+          started = true;
+        }else{
+          ctx.lineTo(px, py);
+        }
+      }
+      ctx.stroke();
+
+      if(type==="afim"){
+        exp.textContent =
+`Função afim: f(x)=ax+b
+
+Com os valores escolhidos:
+f(x) = ${a}x + ${b}
+
+Interpretação:
+- a = coeficiente angular: controla a inclinação da reta.
+- b = coeficiente linear: ponto onde a reta corta o eixo y.
+- se a > 0, a reta cresce da esquerda para a direita.
+- se a < 0, a reta decresce.`;
+      }
+
+      if(type==="quad"){
+        exp.textContent =
+`Função quadrática: f(x)=ax²+bx+c
+
+Com os valores escolhidos:
+f(x) = ${a}x² + ${b}x + ${c}
+
+Interpretação:
+- o gráfico é uma parábola.
+- se a > 0, a concavidade é voltada para cima.
+- se a < 0, a concavidade é voltada para baixo.
+- as raízes, quando existem, são os pontos onde o gráfico corta o eixo x.`;
+      }
+
+      if(type==="exp"){
+        exp.textContent =
+`Função exponencial: f(x)=a^x
+
+Com os valores escolhidos:
+f(x) = ${a}^x
+
+Interpretação:
+- se a > 1, a função é crescente.
+- se 0 < a < 1, a função é decrescente.
+- o gráfico passa por (0,1), desde que a seja positiva e diferente de 1.`;
+      }
+    }
+
+    drawGraph();
+
+    /* ========== MODO PROVA ========== */
+    let score = 0, hits = 0, misses = 0;
+    let currentQuiz = null;
+
+    const quizBank = {
+      mat: {
+        facil: [
+          {
+            q:"Resolva: 2^x = 16",
+            options:["x = 2","x = 3","x = 4","x = 5"],
+            answer:2,
+            explain:"Como 16 = 2^4, então 2^x = 2^4, logo x = 4."
+          },
+          {
+            q:"Na função f(x)=2x+3, qual é o valor de f(4)?",
+            options:["8","10","11","12"],
+            answer:2,
+            explain:"f(4)=2·4+3=11."
+          }
+        ],
+        medio: [
+          {
+            q:"Numa PA com a1=3 e r=4, qual é o 5º termo?",
+            options:["15","17","19","21"],
+            answer:2,
+            explain:"a5 = 3 + (5-1)·4 = 3 + 16 = 19."
+          }
+        ],
+        dificil: [
+          {
+            q:"Se 3^(x+1)=81, então x vale:",
+            options:["2","3","4","5"],
+            answer:1,
+            explain:"81 = 3^4. Então x+1=4 e x=3."
+          }
+        ]
+      },
+      fis: {
+        facil: [
+          {
+            q:"No MRU, um corpo com v=4 m/s move-se por 5 s a partir de s0=2 m. Qual é a posição final?",
+            options:["18 m","20 m","22 m","24 m"],
+            answer:2,
+            explain:"s = s0 + vt = 2 + 4·5 = 22 m."
+          }
+        ],
+        medio: [
+          {
+            q:"Uma força de 10 N desloca um corpo 6 m na mesma direção. O trabalho é:",
+            options:["16 J","40 J","60 J","80 J"],
+            answer:2,
+            explain:"T = F·d = 10·6 = 60 J."
+          }
+        ],
+        dificil: [
+          {
+            q:"Um corpo de massa 2 kg move-se a 6 m/s. Sua energia cinética é:",
+            options:["12 J","18 J","36 J","72 J"],
+            answer:2,
+            explain:"Ec = mv²/2 = 2·36/2 = 36 J."
+          }
+        ]
+      }
+    };
+
+    function updateScore(){
+      document.getElementById("scoreBox").textContent =
+`Pontuação: ${score}
+Acertos: ${hits}
+Erros: ${misses}`;
+    }
+
+    function generateQuiz(){
+      const subject = document.getElementById("quizSubject").value;
+      const level = document.getElementById("quizLevel").value;
+      const arr = quizBank[subject][level];
+      currentQuiz = arr[Math.floor(Math.random()*arr.length)];
+
+      document.getElementById("quizQuestion").textContent = currentQuiz.q;
+      document.getElementById("quizFeedback").textContent = "Escolhe uma opção.";
+      document.getElementById("quizOptions").innerHTML = currentQuiz.options.map((op, i) => `
+        <button class="option" onclick="answerQuiz(${i}, this)">${op}</button>
+      `).join("");
+    }
+
+    function answerQuiz(index, el){
+      if(!currentQuiz) return;
+      const options = [...document.querySelectorAll(".option")];
+      options.forEach(b => b.disabled = true);
+
+      if(index === currentQuiz.answer){
+        el.classList.add("correct");
+        hits++;
+        score += 10;
+        document.getElementById("quizFeedback").textContent = "Resposta correta.\n\n" + currentQuiz.explain;
+        launchFireworks();
+      }else{
+        el.classList.add("wrong");
+        options[currentQuiz.answer].classList.add("correct");
+        misses++;
+        document.getElementById("quizFeedback").textContent = "Resposta incorreta.\n\n" + currentQuiz.explain;
+      }
+
+      updateScore();
+    }
+
+    function launchFireworks(){
+      const colors = ["#ffd166","#7cc4ff","#8c7bff","#22c55e","#ff7b7b"];
+      for(let i=0;i<42;i++){
+        const dot = document.createElement("div");
+        dot.className = "firework";
+        dot.style.left = (window.innerWidth/2 + (Math.random()*120 - 60)) + "px";
+        dot.style.top = (window.innerHeight/2 + (Math.random()*80 - 40)) + "px";
+        dot.style.background = colors[Math.floor(Math.random()*colors.length)];
+        dot.style.setProperty("--x", (Math.random()*360 - 180) + "px");
+        dot.style.setProperty("--y", (Math.random()*360 - 180) + "px");
+        document.body.appendChild(dot);
+        setTimeout(() => dot.remove(), 1000);
+      }
+    }
+
+    updateScore();
+
+    /* ========== TUTOR IA ========== */
+    const academyInfo = `
+A Academia DAP é um portal escolar fictício construído para organizar o estudo de Matemática e Física.
+O site foi estruturado para parecer um ambiente humano de estudo, com teoria, história, fórmulas, calculadoras, gráficos e treino.
+`;
+
+    const tutorKnowledge = [
+      {
+        keys:["quem criou o site","quem fez o site","quem criou a academia dap"],
+        answer:`A Academia DAP foi concebida como uma plataforma escolar de apoio ao estudo. Nesta versão do projeto, ela aparece como um portal educacional organizado para alunos, com foco em Matemática e Física, reunindo teoria, história, fórmulas, treino e calculadoras num só ambiente.`
+      },
+      {
+        keys:["equação exponencial","equacoes exponenciais","equacao exponencial"],
+        answer:`Uma equação exponencial é uma equação em que a incógnita aparece no expoente. Isso muda bastante o tipo de raciocínio necessário, porque já não estamos a resolver algo como 3x+2=8, mas sim algo como 2^x=16 ou 3^(x+1)=81.
+
+A ideia central é a seguinte:
+1. Tentar escrever ambos os lados com a mesma base.
+2. Se isso for possível, igualar os expoentes.
+3. Se não for possível, recorrer a logaritmos.
+
+Exemplo 1:
+2^x = 16
+Como 16 = 2^4, fica:
+2^x = 2^4
+Logo, x = 4.
+
+Exemplo 2:
+3^(x+1)=81
+Como 81=3^4:
+3^(x+1)=3^4
+x+1=4
+x=3.
+
+Essas equações aparecem em crescimento populacional, juros compostos, radioatividade e processos de duplicação.`
+      },
+      {
+        keys:["newton","leis de newton","isaac newton"],
+        answer:`Isaac Newton foi um físico, matemático e filósofo natural inglês, uma das figuras centrais da história da ciência. A sua obra ajudou a consolidar a mecânica clássica.
+
+As três leis de Newton resumem como forças e movimento se relacionam:
+
+1ª Lei — Inércia:
+Se a força resultante sobre um corpo é nula, ele mantém o estado em que está: repouso ou movimento retilíneo uniforme.
+
+2ª Lei — Dinâmica:
+A força resultante produz aceleração e a relação básica é FR = m·a.
+Ela mostra que a aceleração depende da força aplicada e da massa do corpo.
+
+3ª Lei — Ação e reação:
+As forças aparecem em pares. Se um corpo A exerce força sobre B, então B exerce sobre A uma força de mesma intensidade, mesma direção e sentido oposto.
+
+As leis de Newton foram publicadas em 1687 no livro Principia e mudaram a forma como o movimento era compreendido.`
+      },
+      {
+        keys:["trabalho","trabalho de uma força"],
+        answer:`Em Física, trabalho não significa “esforço” no sentido comum da palavra. Trabalho é uma forma de medir a energia transferida por uma força quando essa força provoca deslocamento.
+
+No caso mais simples, quando força e deslocamento têm a mesma direção:
+T = F·d
+
+Se empurras uma caixa com 20 N ao longo de 3 m, o trabalho é:
+T = 20·3 = 60 J
+
+O conceito é importante porque faz ponte entre dinâmica e energia. Ele ajuda a entender por que um corpo ganha velocidade, por que uma máquina precisa de energia e como comparar diferentes ações mecânicas.`
+      },
+      {
+        keys:["mru","movimento retilineo uniforme","movimento retilíneo uniforme"],
+        answer:`No MRU, a velocidade permanece constante ao longo do tempo e a aceleração é nula. Isso significa que o corpo percorre distâncias iguais em tempos iguais.
+
+A fórmula principal é:
+s = s0 + vt
+
+Onde:
+- s é a posição final
+- s0 é a posição inicial
+- v é a velocidade
+- t é o tempo
+
+Também podes isolar:
+v = (s-s0)/t
+t = (s-s0)/v
+s0 = s-vt
+
+É um modelo simples, mas muito importante porque ensina a pensar posição como função do tempo.`
+      },
+      {
+        keys:["energia cinetica","energia cinética"],
+        answer:`Energia cinética é a energia associada ao movimento. Se um corpo está em movimento, ele tem capacidade de realizar trabalho por causa dessa velocidade.
+
+A fórmula é:
+Ec = mv²/2
+
+Isso mostra duas coisas importantes:
+- aumentar a massa aumenta Ec de forma proporcional;
+- aumentar a velocidade aumenta Ec de forma muito forte, porque a velocidade aparece ao quadrado.
+
+Exemplo:
+m=2 kg e v=6 m/s
+Ec = 2·36/2 = 36 J`
+      },
+      {
+        keys:["quem es","o que é academia dap","academia dap"],
+        answer:`A Academia DAP é um portal de estudo pensado para reunir Matemática e Física num só lugar. A proposta é evitar aquele modelo de site que só lista fórmulas. Em vez disso, o aluno encontra teoria, explicações mais completas, história dos conceitos, calculadoras, gráficos, treino para prova e um tutor de apoio.`
+      }
+    ];
+
+    function addMessage(text, type){
+      const chatbox = document.getElementById("chatbox");
+      const div = document.createElement("div");
+      div.className = `msg ${type}`;
+      div.textContent = text;
+      chatbox.appendChild(div);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function getTutorResponse(text){
+      const msg = text.toLowerCase().trim();
+
+      for(const item of tutorKnowledge){
+        if(item.keys.some(k => msg.includes(k))){
+          return item.answer;
+        }
+      }
+
+      if(msg.includes("olá") || msg.includes("ola") || msg.includes("bom dia") || msg.includes("boa tarde")){
+        return "Olá. Estou aqui para ajudar com Matemática, Física, fórmulas, exercícios, história dos cientistas e dúvidas sobre a Academia DAP. Podes perguntar livremente.";
+      }
+
+      if(msg.includes("formula") || msg.includes("fórmula")){
+        return `Posso ajudar com fórmulas de Matemática e Física, incluindo isolamento de incógnitas. Se quiseres, escreve a fórmula ou o tema, por exemplo:
+- “isola a velocidade em s = s0 + vt”
+- “explica a fórmula da energia cinética”
+- “como resolver uma equação exponencial?”`;
+      }
+
+      return `Ainda não tenho uma resposta específica pronta para essa pergunta nesta primeira parte da V3, mas posso ajudar se reformulares com o tema principal.
+
+Exemplos:
+- “explica equação exponencial”
+- “fala sobre Newton”
+- “o que é MRU?”
+- “explica trabalho de uma força”
+- “quem criou a Academia DAP?”`;
+    }
+
+    function sendMessage(){
+      const input = document.getElementById("chatInput");
+      const text = input.value.trim();
+      if(!text) return;
+      addMessage(text, "user");
+      input.value = "";
+      setTimeout(() => addMessage(getTutorResponse(text), "bot"), 250);
+    }
+
+    document.getElementById("chatInput").addEventListener("keydown", e => {
+      if(e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>
